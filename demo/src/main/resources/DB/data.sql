@@ -1,0 +1,3 @@
+ INSERT INTO tb_usuarios (nome_usuario, senha, email_usuario, roles_usuario) VALUES ('Admin Teste', '$2a$10$CwTycUXWue0Thq9StjUM0uJ8YB2VZBxU1b5T8sO/3vGp3qG0h2w9a', 'admin@unilab.com', 'ROLE_ADMIN'); 
+
+ INSERT INTO tb_usuarios (nome_usuario, senha, email_usuario, roles_usuario) VALUES ('Professor Teste', '$2a$10$CwTycUXWue0Thq9StjUM0uJ8YB2VZBxU1b5T8sO/3vGp3qG0h2w9a', 'professor@unilab.com', 'ROLE_PROFESSOR');
