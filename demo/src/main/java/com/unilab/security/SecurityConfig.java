@@ -40,13 +40,13 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/usuarios/**"))
                                 .authorizeHttpRequests(auth -> auth
                                                 // Recursos públicos
                                                 .requestMatchers(PUBLIC_RESOURCES).permitAll()
                                                 .requestMatchers("/", "/main", "/main/sobre", "/main/tutoriais",
                                                                 "/main/suporte",
-                                                                "/login")
+                                                                "/login", "/usuarios/cadastrar")
                                                 .permitAll()
 
                                                 // Endpoints ADMIN
@@ -77,7 +77,7 @@ public class SecurityConfig {
                                 .formLogin(form -> form
                                                 .loginPage("/login")
                                                 .loginProcessingUrl("/login")
-                                                .usernameParameter("email")
+                                                .usernameParameter("email_usuario")
                                                 .successHandler(sucessHandler)
                                                 .failureHandler(failureHandler)
                                                 .permitAll())

@@ -3,8 +3,11 @@ package com.unilab.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.unilab.model.Usuario;
+import com.unilab.model.dto.UsuarioDTO;
+import com.unilab.model.dto.UsuarioResponse;
 import com.unilab.repositories.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,17 +21,14 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
 
 
-    //private static final String ROLE_USER = "ROLE_USER";
+    private static final String ROLE_USER = "ROLE_USER";
 
     public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado!"));
     }
 
-    //ESTOU COMENTANDO POIS NO MOMENTO, NÃO É NECESSÁRIO CADASTRAR USUÁRIO
-    //MAS DEIXO AQUI PARA FUTURAMENTE, CASO SEJA NECESSÁRIO
-
-    /*@Transactional
+    @Transactional
     public UsuarioResponse cadastrarUsuario(UsuarioDTO usuarioDTO) {
         if (usuarioRepository.findByEmail(usuarioDTO.email()).isPresent()) {
             throw new IllegalArgumentException("Email já cadastrado!");
@@ -54,7 +54,7 @@ public class UsuarioService {
         return new UsuarioResponse(usuarioExistente.getId(), usuarioExistente.getNome(), usuarioExistente.getEmail());
     }
 
-     */
+     
 
 
 }
