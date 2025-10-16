@@ -69,7 +69,7 @@ public class SecurityConfig {
                                                                 "/novo-agendamento", "/main/seja-bem-vindo-professor",
                                                                 "/main/meus-agendamentos", "/main/agendar-laboratorio",
                                                                 "/solicitar-agendamento")
-                                                .hasRole("PROFESSOR")
+                                                .hasRole("USER")
 
                                                 // Todas as outras requisições precisam de autenticação
                                                 .anyRequest().authenticated())
