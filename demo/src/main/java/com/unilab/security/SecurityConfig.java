@@ -58,9 +58,10 @@ public class SecurityConfig {
                                                                 "/main/atualizar-laboratorio",
                                                                 "/main/gerenciar-laboratorio",
                                                                 "/main/gerenciar-professor",
-                                                                "/main/historico",
+                                                                "/main/historico","/main/meus-agendamentos",
                                                                 "/cadastrar-laboratorio", "/deletar-laboratorio/**",
                                                                 "/atualizar-laboratorio/**",
+                                                                "/main/agendar-laboratorio",
                                                                 "/deletar-agendamento/**", "/atualizar-agendamento/**")
                                                 .hasRole("ADMIN")
 
