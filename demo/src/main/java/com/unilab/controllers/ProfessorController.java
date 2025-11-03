@@ -1,13 +1,16 @@
 package com.unilab.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.unilab.model.Agendamento;
-import com.unilab.service.AgendamentoService;
+import com.unilab.model.Professor;
+import com.unilab.model.Usuario;
 import com.unilab.service.ProfessorService;
+import com.unilab.service.UsuarioService;
 
 /**
  * Classe Controller dos Professores do sistema
@@ -23,17 +26,27 @@ public class ProfessorController {
     private ProfessorService professorService;
 
     @Autowired
-    private AgendamentoService agendamentoService;
+    private UsuarioService usuarioService;
 
-    @GetMapping("/login")
-    public String loginProf() {
-        return "telaDeLoginProfessor";
-    }
-
-    @GetMapping("/novo-agendamento")
-    public String novoAgendamento(Model model) {
-        model.addAttribute("agendamento", new Agendamento());
-        return "meusagendamentos";
+    @PostMapping("/cadastrar-professor")
+    public String cadastrar(@ModelAttribute Professor professor, 
+                          Authentication authentication, 
+                          RedirectAttributes redirectAttributes) {
+    
+        // Obtém o e-mail do usuário autenticado
+        String email = authentication.getName();
+    
+        // Busca o usuário no banco
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+    
+        if (usuario != null) {
+            professorService.criarProfessor(professor);
+            redirectAttributes.addFlashAttribute("mensagem", "Professor salvo com sucesso!");
+        } else {
+            redirectAttributes.addFlashAttribute("mensagem", "Erro ao salvar: usuário não encontrado.");
+        }
+    
+        return "redirect:/main/gerenciar-professor";
     }
 
     

@@ -1,5 +1,8 @@
 package com.unilab.controllers;
 
+import java.util.List;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.unilab.model.Agendamento;
 import com.unilab.model.Laboratorio;
 import com.unilab.model.Professor;
+import com.unilab.model.Usuario;
+import com.unilab.service.AgendamentoService;
+import com.unilab.service.UsuarioService;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Classe Controller que carregará apenas os templates
@@ -18,7 +26,11 @@ import com.unilab.model.Professor;
 
 @Controller
 @RequestMapping("main")
+@RequiredArgsConstructor
 public class MainController {
+
+    private final UsuarioService usuarioService;
+    private final AgendamentoService agendamentoService;
 
     @GetMapping("")
     public String index() {
@@ -27,7 +39,7 @@ public class MainController {
 
     @GetMapping("/sobre")
     public String sobre() {
-        return "/sobre";
+        return "sobre";
     }
 
     @GetMapping("/tutoriais")
@@ -42,7 +54,7 @@ public class MainController {
 
     @GetMapping("/login-admin")
     public String telaLoginAdm(){
-        return "telaDeLoginAdministrador";
+        return "telaDeLoginProfessor";
     }
 
     @GetMapping("/login-professor")
@@ -103,9 +115,32 @@ public class MainController {
         return "admgerenciarprof";
     }
 
-    @GetMapping("meus-agendamentos")
-    public String meusAgendamentos(){
-        return "meusagendamentos";
+@GetMapping("/meus-agendamentos")
+public String meusAgendamentos(Authentication auth, Model model) {
+    String email = auth.getName();
+    Usuario usuario = usuarioService.buscarPorEmail(email);
+
+    List<Agendamento> agendamentos = agendamentoService.listarPorUsuario(usuario);
+
+    model.addAttribute("agendamentos", agendamentos);
+
+    String rotaVoltar = null;
+
+    if(usuario.getRole().equalsIgnoreCase("ROLE_ADMIN")){
+        rotaVoltar = "/main/seja-bem-vindo-adm";
     }
+    else if(usuario.getRole().equalsIgnoreCase("ROLE_PROFESSOR")){
+        rotaVoltar = "/main/seja-bem-vindo-professor";
+    }
+
+    if(usuario.getRole() == null){
+        rotaVoltar = "/";
+    }
+
+    model.addAttribute("rotaVoltar", rotaVoltar);
+
+    return "meusagendamentos";
+}
+
 
 }

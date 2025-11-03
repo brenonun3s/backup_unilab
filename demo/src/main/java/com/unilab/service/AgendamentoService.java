@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unilab.exceptions.AgendamentoNaoLocalizadoException;
 import com.unilab.exceptions.LaboratorioNaoExisteException;
 import com.unilab.model.Agendamento;
+import com.unilab.model.Usuario;
 import com.unilab.repositories.AgendamentoRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -76,6 +77,11 @@ public class AgendamentoService {
             agendamentoExistente.setData(agendamentoAtualizacao.getData());
         }
         agendamentoRepository.save(agendamentoExistente);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Agendamento> listarPorUsuario(Usuario usuario){
+        return agendamentoRepository.findByUsuario(usuario);
     }
 
 }

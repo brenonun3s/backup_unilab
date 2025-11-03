@@ -1,4 +1,3 @@
-<!-- Código adaptado por ChatGPT com base no original de Rafael V. Gogge -->
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -24,7 +23,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" th:href="@{/main/seja-bem-vindo}">
+            <a class="navbar-brand" th:href="${rotaVoltar}">
                 <img th:src="@{/imagens/LogoUnilab.png}" alt="UniLab Logo" height="40">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -33,9 +32,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/main/seja-bem-vindo}">
+                        <a class="nav-link" th:href="${rotaVoltar}">
                             <i class="bi bi-house"></i> Início
                         </a>
+                                               
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
@@ -62,9 +62,10 @@
             </div>
 
             <div>
-                <a th:href="@{/main/seja-bem-vindo}" class="btn btn-secondary me-2">
+                <a th:href="${rotaVoltar}" class="btn btn-secondary me-2">
                     <i class="bi bi-arrow-left"></i> Voltar
                 </a>
+                
                 <a th:href="@{/main/agendar-laboratorio}" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Novo Agendamento
                 </a>
