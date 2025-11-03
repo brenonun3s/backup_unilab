@@ -129,7 +129,7 @@ public String meusAgendamentos(Authentication auth, Model model) {
     if(usuario.getRole().equalsIgnoreCase("ROLE_ADMIN")){
         rotaVoltar = "/main/seja-bem-vindo-adm";
     }
-    else if(usuario.getRole().equalsIgnoreCase("ROLE_PROFESSOR")){
+    else if(usuario.getRole().equalsIgnoreCase("ROLE_USER")){
         rotaVoltar = "/main/seja-bem-vindo-professor";
     }
 
