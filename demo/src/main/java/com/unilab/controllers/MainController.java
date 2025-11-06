@@ -52,14 +52,9 @@ public class MainController {
         return "documento";
     }
 
-    @GetMapping("/login-admin")
-    public String telaLoginAdm(){
-        return "telaDeLoginProfessor";
-    }
-
-    @GetMapping("/login-professor")
+    @GetMapping("/login-form")
     public String telaLoginProfessor(){
-        return "telaDeLoginProfessor";
+        return "telaLogin";
     }
 
     @GetMapping("/seja-bem-vindo-adm")
@@ -105,12 +100,12 @@ public class MainController {
         return "atualizarlaboratorio";
     }
 
-    @GetMapping("gerenciar-laboratorio")
+    @GetMapping("/gerenciar-laboratorio")
     public String gerenciarLaboratorio(){
         return "admgerenciarlab";
     }
 
-    @GetMapping("gerenciar-professor")
+    @GetMapping("/gerenciar-professor")
     public String gerenciarProfessor(){
         return "admgerenciarprof";
     }

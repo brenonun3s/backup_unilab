@@ -46,7 +46,7 @@ public class SecurityConfig {
                                                 .requestMatchers(PUBLIC_RESOURCES).permitAll()
                                                 .requestMatchers("/", "/main", "/main/sobre", "/main/tutoriais",
                                                                 "/main/suporte",
-                                                                "/login", "/usuarios/cadastrar")
+                                                                "/login", "/usuarios/cadastrar", "/main/login-form")
                                                 .permitAll()
 
                                                 // Endpoints ADMIN
@@ -76,7 +76,7 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated())
                                 // Configuração de login
                                 .formLogin(form -> form
-                                                .loginPage("/login")
+                                                .loginPage("/login-form")
                                                 .loginProcessingUrl("/login")
                                                 .usernameParameter("email_usuario")
                                                 .successHandler(sucessHandler)
@@ -88,7 +88,7 @@ public class SecurityConfig {
                                 // Configuração de logout
                                 .logout(logout -> logout
                                                 .logoutUrl("/logout")
-                                                .logoutSuccessUrl("/login")
+                                                .logoutSuccessUrl("/login-form")
                                                 .invalidateHttpSession(true)
                                                 .deleteCookies("JSESSIONID")
                                                 .permitAll())

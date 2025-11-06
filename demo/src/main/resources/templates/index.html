@@ -31,7 +31,7 @@
   <link rel="stylesheet" th:href="@{/css/index.css}" />
 
   <!-- Favicon do sistema -->
-  <link rel="shortcut icon" th:href="@{/favicon/favicon.ico}" type="image/x-icon" />
+  <link rel="shortcut icon" th:href="@{favicon/favicon.ico}" type="image/x-icon" />
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -171,7 +171,7 @@
               <h2 class="text-center mb-4">Escolha seu tipo de acesso</h2>
               <div class="row g-4">
                 <div class="col-md-6">
-                  <a th:href="@{/main/login-admin}" class="user-card admin-card">
+                  <a th:href="@{/main/login-form}" class="user-card admin-card">
                     <div class="card-icon">
                       <i class="bi bi-shield-lock"></i>
                     </div>
@@ -180,7 +180,7 @@
                   </a>
                 </div>
                 <div class="col-md-6">
-                  <a th:href="@{/main/login-professor}" class="user-card professor-card">
+                  <a th:href="@{/main/login-form}" class="user-card professor-card">
                     <div class="card-icon">
                       <i class="bi bi-person-badge"></i>
                     </div>

@@ -80,11 +80,6 @@
             <div class="invalid-feedback">Por favor, insira sua senha.</div>
           </div>
 
-          <div class="form-check mb-3 animate-checkbox">
-            <input class="form-check-input" type="checkbox" id="rememberMe" name="remember-me">
-            <label class="form-check-label" for="rememberMe">Lembrar-me</label>
-          </div>
-
           <div class="d-grid gap-2 animate-button">
             <button type="submit" class="btn btn-primary btn-login">
               <i class="bi bi-box-arrow-in-right"></i> Entrar
@@ -110,52 +105,40 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Digite seu e-mail cadastrado para receber as instruções de recuperação de senha.</p>
-          <form id="recoveryForm">
-            <div class="form-floating mb-3 input-group-animate">
-              <input type="email" class="form-control" id="recoveryEmail" placeholder="E-mail" required>
-              <label for="recoveryEmail">E-mail</label>
-              <div class="input-icon"><i class="bi bi-envelope"></i></div>
-              <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
-            </div>
-          </form>
+          <p>Entre em contato com o setor de suporte do Unilab para atualização da sua senha! Obrigado!
+          </p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="sendRecovery">
-            <span class="btn-text"><i class="bi bi-send"></i>Enviar</span>
-            <span class="btn-loader d-none">
-              <span class="spinner"></span>
-              <span>Enviando...</span>
-            </span>
-          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer py-3 mt-auto">
-    <div class="container text-center">
-      <div class="footer-links">
-        <a href="documento.html" class="footer-link-animate">
-          <i class="bi bi-headset"></i>Suporte
-        </a>
-        <span class="separator">|</span>
-        <a href="termos.html" class="footer-link-animate">
-          <i class="bi bi-file-text"></i>Termos de Uso
-        </a>
-        <span class="separator">|</span>
-        <a href="privacidade.html" class="footer-link-animate">
-          <i class="bi bi-shield-check"></i>Privacidade
-        </a>
-      </div>
-    </div>
-  </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Mantendo o JS original -->
   <script th:src="@{/js/telaDeLoginAdministrador.js}"></script>
   <script th:src="@{/js/telaDeLoginProfessor.js}"></script>
+
+  <script>
+    // Seleciona o botão e o input de senha
+    const togglePassword = document.querySelector('.password-toggle');
+    const passwordInput = document.querySelector('#password');
+  
+    togglePassword.addEventListener('click', () => {
+      // Alterna entre password e text
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+  
+      // Alterna o ícone
+      const icon = togglePassword.querySelector('i');
+      if(type === 'password') {
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+      } else {
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+      }
+    });
+  </script>
+  
 </body>
 </html>
