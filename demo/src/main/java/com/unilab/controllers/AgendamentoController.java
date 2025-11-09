@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,8 @@ import com.unilab.exceptions.AgendamentoNaoLocalizadoException;
 import com.unilab.model.Agendamento;
 import com.unilab.model.Usuario;
 import com.unilab.service.AgendamentoService;
+import com.unilab.service.LaboratorioService;
+import com.unilab.service.ProfessorService;
 import com.unilab.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,8 @@ public class AgendamentoController {
 
     private final UsuarioService usuarioService;
     private final AgendamentoService agendamentoService;
+    private final LaboratorioService laboratorioService;
+    private final ProfessorService professorService;
 
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -67,11 +72,12 @@ public class AgendamentoController {
         }
     }
 
-    @PostMapping("/solicitar-agendamento")
+    @PostMapping("/main/solicitar-agendamento")
     public String agendar(@ModelAttribute Agendamento agendamento, 
                           Authentication authentication, 
-                          RedirectAttributes redirectAttributes) {
+                          RedirectAttributes redirectAttributes, Model model) {
     
+        try{
         // Obtém o e-mail do usuário autenticado
         String email = authentication.getName();
     
@@ -87,7 +93,13 @@ public class AgendamentoController {
         }
     
         return "redirect:/main/meus-agendamentos";
+    } catch (RuntimeException e) {
+        model.addAttribute("erro", e.getMessage());
+        model.addAttribute("professores", professorService.listarProfessores());
+        model.addAttribute("laboratorios", laboratorioService.listarLaboratorios());
+        return "cadastraragendamento";
     }
+}
 }
     
 

@@ -13,6 +13,8 @@ import com.unilab.model.Laboratorio;
 import com.unilab.model.Professor;
 import com.unilab.model.Usuario;
 import com.unilab.service.AgendamentoService;
+import com.unilab.service.LaboratorioService;
+import com.unilab.service.ProfessorService;
 import com.unilab.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,8 @@ public class MainController {
 
     private final UsuarioService usuarioService;
     private final AgendamentoService agendamentoService;
+    private final ProfessorService professorService;
+    private final LaboratorioService laboratorioService;
 
     @GetMapping("")
     public String index() {
@@ -70,6 +74,8 @@ public class MainController {
     @GetMapping("/agendar-laboratorio")
     public String agendarLaboratorio(Model model){
         model.addAttribute("agendamento", new Agendamento());
+        model.addAttribute("professores", professorService.listarProfessores());
+        model.addAttribute("laboratorios", laboratorioService.listarLaboratorios());
         return "cadastraragendamento";
     }
 
@@ -101,41 +107,45 @@ public class MainController {
     }
 
     @GetMapping("/gerenciar-laboratorio")
-    public String gerenciarLaboratorio(){
+    public String gerenciarLaboratorio(Model model){
+        List<Laboratorio> laboratorios = laboratorioService.listarLaboratorios();
+        model.addAttribute("laboratorios", laboratorios);
         return "admgerenciarlab";
     }
 
     @GetMapping("/gerenciar-professor")
-    public String gerenciarProfessor(){
+    public String gerenciarProfessor(Model model){
+        List<Professor> professores = professorService.listarProfessores();
+        model.addAttribute("professores", professores);
         return "admgerenciarprof";
     }
 
-@GetMapping("/meus-agendamentos")
-public String meusAgendamentos(Authentication auth, Model model) {
-    String email = auth.getName();
-    Usuario usuario = usuarioService.buscarPorEmail(email);
-
-    List<Agendamento> agendamentos = agendamentoService.listarPorUsuario(usuario);
-
-    model.addAttribute("agendamentos", agendamentos);
-
-    String rotaVoltar = null;
-
-    if(usuario.getRole().equalsIgnoreCase("ROLE_ADMIN")){
-        rotaVoltar = "/main/seja-bem-vindo-adm";
+    @GetMapping("/meus-agendamentos")
+    public String meusAgendamentos(Authentication auth, Model model) {
+        String email = auth.getName();
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+    
+        List<Agendamento> agendamentos = agendamentoService.listarPorUsuario(usuario);
+        model.addAttribute("agendamentos", agendamentos);
+    
+        // Apenas se for útil na view:
+        model.addAttribute("professores", professorService.listarProfessores());
+        model.addAttribute("laboratorios", laboratorioService.listarLaboratorios());
+    
+        String rotaVoltar = null;
+    
+        if (usuario.getRole() == null) {
+            rotaVoltar = "/";
+        } else if (usuario.getRole().equalsIgnoreCase("ROLE_ADMIN")) {
+            rotaVoltar = "/main/seja-bem-vindo-adm";
+        } else if (usuario.getRole().equalsIgnoreCase("ROLE_USER")) {
+            rotaVoltar = "/main/seja-bem-vindo-professor";
+        }
+    
+        model.addAttribute("rotaVoltar", rotaVoltar);
+        return "meusagendamentos";
     }
-    else if(usuario.getRole().equalsIgnoreCase("ROLE_USER")){
-        rotaVoltar = "/main/seja-bem-vindo-professor";
-    }
-
-    if(usuario.getRole() == null){
-        rotaVoltar = "/";
-    }
-
-    model.addAttribute("rotaVoltar", rotaVoltar);
-
-    return "meusagendamentos";
-}
+    
 
 
 }

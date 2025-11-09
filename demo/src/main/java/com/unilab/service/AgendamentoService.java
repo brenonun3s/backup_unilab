@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unilab.exceptions.AgendamentoNaoLocalizadoException;
-import com.unilab.exceptions.LaboratorioNaoExisteException;
+import com.unilab.exceptions.LaboratorioOcupadoException;
 import com.unilab.model.Agendamento;
 import com.unilab.model.Usuario;
 import com.unilab.repositories.AgendamentoRepository;
@@ -32,11 +32,17 @@ public class AgendamentoService {
 
     @Transactional
     public Agendamento solicitarAgendamento(Agendamento agendamento) {
-        Agendamento ag = agendamentoRepository.findByData(agendamento.getData());
+        boolean existeConflito = !agendamentoRepository.verificarConflito(
+            agendamento.getLaboratorio().getId(),
+            agendamento.getData(),
+            agendamento.getHorarioInicio(),
+            agendamento.getHorarioFim()
+        ).isEmpty();
 
-        if (ag != null) {
-            throw new LaboratorioNaoExisteException("Não é possível agendar! Laboratório ocupado!");
+        if(existeConflito){
+            throw new LaboratorioOcupadoException("Já possui agendamento nesse horário");
         }
+
         return agendamentoRepository.save(agendamento);
     }
 

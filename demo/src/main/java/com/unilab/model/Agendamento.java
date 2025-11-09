@@ -2,10 +2,7 @@ package com.unilab.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
-
-
 
 @Entity
 @AllArgsConstructor
@@ -22,18 +19,24 @@ public class Agendamento implements Serializable {
     @Column(name = "data_agendamento", nullable = false)
     private String data;
 
-    @Column(name = "horario", nullable = false)
-    private String horario;
+    @Column(name = "horario_inicio", nullable = false)
+    private String horarioInicio;
 
-    @Column(name = "numero_lab")
-    private Integer numeroLaboratorio;
+    @Column(name = "horario_fim", nullable = false)
+    private String horarioFim;
 
-    @Column(name = "professor_resp")
-    private String professor;
+    // Relacionamento com Professor
+    @ManyToOne
+    @JoinColumn(name = "professor_id", nullable = false)
+    private Professor professor;
 
-    // Muitos agendamentos para um usuário
+    // Relacionamento com Laboratório
+    @ManyToOne
+    @JoinColumn(name = "laboratorio_id", nullable = false)
+    private Laboratorio laboratorio;
+
+    // Relacionamento com Usuário
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
-
 }

@@ -110,6 +110,47 @@
             </div>
         </div>
 
+        <!-- Lista de Laboratórios -->
+<div class="table-responsive mt-4">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Número</th>
+                <th>Localização</th>
+                <th>Departamento</th>
+                <th>Ferramentas</th>
+                <th>Capacidade</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="lab : ${laboratorios}">
+                <td th:text="${lab.numeroLaboratorio}"></td>
+                <td th:text="${lab.localizacao}"></td>
+                <td th:text="${lab.departamentoLaboratorio}"></td>
+                <td th:text="${lab.ferramentasDisponiveis}"></td>
+                <td th:text="${lab.capacidade}"></td>
+                <td th:text="${lab.status}"></td>
+                <td>
+                    <a th:href="@{'/main/editar-laboratorio/' + ${lab.id}}" 
+                       class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a th:href="@{'/main/excluir-laboratorio/' + ${lab.id}}" 
+                       class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(laboratorios)}">
+                <td colspan="5" class="text-center text-muted">Nenhum laboratório encontrado.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
         <!-- Paginação -->
         <nav aria-label="Navegação de páginas" class="mt-4">
             <ul class="pagination justify-content-center">

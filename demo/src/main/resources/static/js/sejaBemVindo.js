@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setTimeout(() => {
             localStorage.clear();
-            window.location.href = 'index.html';
+            window.location.href = 'index';
         }, 2000);
     });
 
